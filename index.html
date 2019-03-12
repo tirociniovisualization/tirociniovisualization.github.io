@@ -27,13 +27,21 @@
         map.setView([46.0160, 13.1611], 7);
         var osm = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         }).addTo(map);
+
+        var layerGroup = L.layerGroup().addTo(map);
  
         $.ajax({
             dataType: "json",
             url: "GeoLocatedCultEnt.json",
             success: function(data) {
                 data.results.bindings.forEach(function(arrayItem) {
-                    console.log(arrayItem)
+                    try {
+                            var itemcoord = [arrayItem.lat.value, arrayItem.long.value]
+                            L.marker(itemcoord).addTo(layerGroup);
+                        }
+                        catch(error) {
+                            console.log(error);
+                        }
                 })
             }
         })
