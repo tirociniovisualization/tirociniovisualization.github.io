@@ -48,8 +48,8 @@
                         proj4.defs("EPSG:3003","+proj=tmerc +lat_0=0 +lon_0=9 +k=0.9996 +x_0=1500000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs");
                         Proj4js.defs["WGS84"] = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
 
-                        var source = new Proj4js.Proj('WGS84');    
-                        var dest = new Proj4js.Proj('EPSG:3003');
+                        var dest = new Proj4js.Proj('WGS84');    
+                        var source = new Proj4js.Proj('EPSG:3003');
                         
                         var testPt = new Proj4js.Point(arrayItem.lat.value, arrayItem.long.value);
                         
@@ -60,8 +60,32 @@
                     catch(error) {
                             console.log(error);
                         }
+                    try {
+                            var latinput = arrayItem.lat.value
+                            var longinput = arrayItem.long.value
+                            var latparts = input.split(/[^\d\w]+/);
+                            var lat = ConvertDMSToDD(latparts[0], latparts[1], latparts[2], latparts[3]);
+                            var longparts = input.split(/[^\d\w]+/);
+                            var long = ConvertDMSToDD(longparts[0], longparts[1], longparts[2], longparts[3]);
+
+                            var itemcoord = [lat, long]
+                            itemmarker = L.marker(itemcoord).addTo(layerGroup);
+                            itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
+                    
+                        function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+                            var dd = degrees + minutes/60 + seconds/(60*60);
+
+                            if (direction == "S" || direction == "W") {
+                                dd = dd * -1;
+                            } // Don't do anything for N or E
+                            return dd;
+                        }
+                    }
+                    catch(error) {
+                            console.log(error);
+                        }
                 })
-                
+
             }
         })
     })
