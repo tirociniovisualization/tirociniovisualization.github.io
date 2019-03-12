@@ -38,7 +38,7 @@
                     try {
                             var itemcoord = [arrayItem.lat.value, arrayItem.long.value]
                             itemmarker = L.marker(itemcoord).addTo(layerGroup);
-                            itemmarker.bindPopup('<h1>'+ arrayItem.label.value + '</h1><a href="'+ arrayItem.entity.value + '"> LINK</a>');
+                            itemmarker.bindPopup('<h3>'+ arrayItem.label.value + '</h3><a href="'+ arrayItem.entity.value + '"> LINK</a>');
                         }
                         catch(error) {
                             console.log(error);
