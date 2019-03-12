@@ -10,8 +10,33 @@
         <!--Map-->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"/>
         <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
-
     </head>
     <body>
+        <div id="map">
+
+        </div>
     </body>
+    <script>
+    $(document).ready(function() {
+
+        var map = L.map('map', {
+        maxZoom: 11,
+        minZoom: 6,
+        maxBoundsViscosity: 1.0
+        });
+        map.setView([46.0160, 13.1611], 7);
+        var osm = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        }).addTo(map);
+ 
+        $.ajax({
+            dataType: "json",
+            url: "GeoLocatedCultEnt.json",
+            success: function(data) {
+                data.results.bindings.forEach(function(arrayItem) {
+                    console.log(arrayItem)
+                })
+            }
+        })
+    })
+    </script>
 </html>
