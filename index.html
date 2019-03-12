@@ -37,7 +37,8 @@
                 data.results.bindings.forEach(function(arrayItem) {
                     try {
                             var itemcoord = [arrayItem.lat.value, arrayItem.long.value]
-                            L.marker(itemcoord).addTo(layerGroup);
+                            itemmarker = L.marker(itemcoord).addTo(layerGroup);
+                            itemmarker.bindPopup('<h1>'+ arrayItem.label.value + '</h1><a href="'+ arrayItem.entity.value + '"> LINK</a>');
                         }
                         catch(error) {
                             console.log(error);
