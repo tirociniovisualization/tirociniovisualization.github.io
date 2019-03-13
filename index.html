@@ -44,6 +44,9 @@
                                 var lat = DMStoDD(lat)
                                 var lon = arrayItem.long.value.replace('E', '')
                                 var lon = DMStoDD(lon)
+                                var itemcoord = [lat, lon]
+                                itemmarker = L.marker(itemcoord).addTo(layerGroup);
+                                itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
                             }
                             else if (arrayItem.lat.value.includes("E"))
                             {
@@ -51,6 +54,9 @@
                                 var lon = DMStoDD(lon)
                                 var lat = arrayItem.long.value.replace('N', '')
                                 var lat = DMStoDD(lat)
+                                var itemcoord = [lat, lon]
+                                itemmarker = L.marker(itemcoord).addTo(layerGroup);
+                                itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
                             }
                             else{console.log("lat:" + arrayItem.lat.value + " long:" + arrayItem.lon.value + "   ->AHIA")}
 
@@ -61,12 +67,13 @@
                                 var firstsplit = coord.split("°");
                                 var degree = firstsplit[0]
                                 var minutesecond = firstsplit[1]
-                                console.log(firstsplit)
-                                console.log(minutesecond)
                                 var secondsplit = minutesecond.split("'")
                                 var minute = secondsplit[0]
                                 var second =secondsplit[1]
-                                //console.log(degree + minute + second)
+                                var n1 = second / 3600
+                                var n2 = minute / 60
+                                var ntot = n1 + n2
+                                return (parseFloat(degree.toString() + "." + ntot.toString()))
                             }
 
 
