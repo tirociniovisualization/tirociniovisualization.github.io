@@ -36,54 +36,46 @@
             url: "GeoLocatedCultEnt.json",
             success: function(data) {
                 data.results.bindings.forEach(function(arrayItem) {
-                    try {
-                            var itemcoord = [arrayItem.lat.value, arrayItem.long.value]
-                            itemmarker = L.marker(itemcoord).addTo(layerGroup);
-                            itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
-                        }
-                        catch(error) {
-                            console.log(error);
-                        }
-                    try {
-                        proj4.defs("EPSG:3003","+proj=tmerc +lat_0=0 +lon_0=9 +k=0.9996 +x_0=1500000 +y_0=0 +ellps=intl +towgs84=-104.1,-49.1,-9.9,0.971,-2.917,0.714,-11.68 +units=m +no_defs");
-                        proj4.defs("WGS84","+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs");
+                    if ("N" in arrayItem.lat.value || "E" in arrayItem.lat.value)
+                        {
+                            if ("N" in arrayItem.lat.value)
+                            {
+                                var lat = (arrayItem.lat.value).replace('N', '')
+                                var lat = DMStoDD(lat)
+                                var lon = arrayItem.long.value.replace('E', '')
+                                var lon = DMStoDD(lon)
+                            }
+                            else if ("E" in arrayItem.lan.value)
+                            {
+                                var lon = arrayItem.lat.value.replace('N', '')
+                                var lon = DMStoDD(lon)
+                                var lat = arrayItem.long.value.replace('E', '')
+                                var lat = DMStoDD(lat)
+                            }
+                            else{console.log("lat:" + arrayItem.lat.value + " long:" + arrayItem.lon.value + "   ->AHIA")}
 
-                        var dest = new proj4.Proj('WGS84');    
-                        var source = new proj4.Proj('EPSG:3003');
-                        
-                        var testPt = new proj4.Point(arrayItem.lat.value, arrayItem.long.value);
-                        
-                        var coordnew = proj4.transform(source, dest, testPt);
-                        itemmarker = L.marker(coordnew).addTo(layerGroup);
+                            function DMStoDD(coord){
+                                var firstsplit = coord.split("°");
+                                var degree = firstsplit[0]
+                                var minutesecond = firstsplit[1]
+                                var secondsplit = minutesseconds.split("'")
+                                var minute = secondsplit[0]
+                                var second =secondsplit[1]
+                                console.log(degree + minute + second)
+                            }
 
+
+                        }
+                    else {
+                            try {
+                                    var itemcoord = [arrayItem.lat.value, arrayItem.long.value]
+                                    itemmarker = L.marker(itemcoord).addTo(layerGroup);
+                                    itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
+                                }
+                                catch(error) {
+                                    console.log(error);
+                                }
                     }
-                    catch(error) {
-                            console.log(error);
-                        }
-                    try {
-                            var latinput = arrayItem.lat.value
-                            var longinput = arrayItem.long.value
-                            var latparts = latinput.split(/[^\d\w]+/);
-                            var lat = ConvertDMSToDD(latparts[0], latparts[1], latparts[2], latparts[3]);
-                            var longparts = longinput.split(/[^\d\w]+/);
-                            var long = ConvertDMSToDD(longparts[0], longparts[1], longparts[2], longparts[3]);
-
-                            var itemcoord = [lat, long]
-                            itemmarker = L.marker(itemcoord).addTo(layerGroup);
-                            itemmarker.bindPopup('<h4>'+ arrayItem.label.value + '</h4><a href="'+ arrayItem.entity.value + '"> LINK</a>');
-                    
-                        function ConvertDMSToDD(degrees, minutes, seconds, direction) {
-                            var dd = degrees + minutes/60 + seconds/(60*60);
-
-                            if (direction == "S" || direction == "W") {
-                                dd = dd * -1;
-                            } // Don't do anything for N or E
-                            return dd;
-                        }
-                    }
-                    catch(error) {
-                            console.log(error);
-                        }
                 })
 
             }
