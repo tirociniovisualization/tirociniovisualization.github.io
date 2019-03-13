@@ -73,8 +73,8 @@
                                 var n1 = second / 3600
                                 var n2 = minute / 60
                                 var ntot = parseFloat(degree) + parseFloat(n1 + n2)
-                                console.log (ntot)
-                                return Math.round10(ntot, -4)
+                                console.log (ntot.toFixed(4))
+                                return (ntot.toFixed(4))
                             }
 
 
