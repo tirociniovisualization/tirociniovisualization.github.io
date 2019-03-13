@@ -47,9 +47,9 @@
                             }
                             else if (arrayItem.lat.value.includes("E"))
                             {
-                                var lon = arrayItem.lat.value.replace('N', '')
+                                var lon = arrayItem.lat.value.replace('E', '')
                                 var lon = DMStoDD(lon)
-                                var lat = arrayItem.long.value.replace('E', '')
+                                var lat = arrayItem.long.value.replace('N', '')
                                 var lat = DMStoDD(lat)
                             }
                             else{console.log("lat:" + arrayItem.lat.value + " long:" + arrayItem.lon.value + "   ->AHIA")}
