@@ -56,7 +56,7 @@
 
                             function DMStoDD(coord){
                                 if (coord.includes(",")){
-                                    coord.replace(",", "'")
+                                    coord = coord.replace(",", "'")
                                 }
                                 var firstsplit = coord.split("°");
                                 var degree = firstsplit[0]
