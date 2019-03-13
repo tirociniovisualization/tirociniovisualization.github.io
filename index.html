@@ -53,7 +53,7 @@
                         
                         var testPt = new proj4.Point(arrayItem.lat.value, arrayItem.long.value);
                         
-                        var coordnew = Proj4js.transform(source, dest, testPt);
+                        var coordnew = proj4.transform(source, dest, testPt);
                         itemmarker = L.marker(coordnew).addTo(layerGroup);
 
                     }
