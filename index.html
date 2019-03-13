@@ -38,14 +38,14 @@
                 data.results.bindings.forEach(function(arrayItem) {
                     if ((arrayItem.lat.value.toString()).includes("N") || (arrayItem.lat.value.toString()).includes("E"))
                         {
-                            if ("N" in arrayItem.lat.value)
+                            if (arrayItem.lat.value.includes("N"))
                             {
                                 var lat = (arrayItem.lat.value).replace('N', '')
                                 var lat = DMStoDD(lat)
                                 var lon = arrayItem.long.value.replace('E', '')
                                 var lon = DMStoDD(lon)
                             }
-                            else if ("E" in arrayItem.lan.value)
+                            else if (arrayItem.lan.value.includes("E"))
                             {
                                 var lon = arrayItem.lat.value.replace('N', '')
                                 var lon = DMStoDD(lon)
