@@ -55,6 +55,9 @@
                             else{console.log("lat:" + arrayItem.lat.value + " long:" + arrayItem.lon.value + "   ->AHIA")}
 
                             function DMStoDD(coord){
+                                if (coord.includes(",")){
+                                    coord.replace(",", "'")
+                                }
                                 var firstsplit = coord.split("°");
                                 var degree = firstsplit[0]
                                 var minutesecond = firstsplit[1]
