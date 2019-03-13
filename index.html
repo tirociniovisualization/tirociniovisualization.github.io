@@ -36,7 +36,7 @@
             url: "GeoLocatedCultEnt.json",
             success: function(data) {
                 data.results.bindings.forEach(function(arrayItem) {
-                    if ("N" in str(arrayItem.lat.value) || "E" in str(arrayItem.lat.value))
+                    if ("N" in (arrayItem.lat.value).toString() || "E" in (arrayItem.lat.value).toString())
                         {
                             if ("N" in arrayItem.lat.value)
                             {
